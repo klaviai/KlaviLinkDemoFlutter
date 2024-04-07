@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:klavi_link_demo_flutter/route.dart';
+import 'package:klavi_link_demo_flutter/router.dart';
 
 
 void main() {
