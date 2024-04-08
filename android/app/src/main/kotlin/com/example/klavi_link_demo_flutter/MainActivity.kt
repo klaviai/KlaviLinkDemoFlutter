@@ -10,7 +10,7 @@ import io.flutter.plugin.common.MethodChannel
 import java.net.URISyntaxException
 
 class MainActivity: FlutterActivity() {
-    private var CHANNEL = "com.klavi.flutter.launch-app"
+    private var CHANNEL = "com.klavi.link.demo/launchApp"
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
