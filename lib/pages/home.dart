@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:klavi_link_demo_flutter/pages/web.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ListItemType {
   final String label;
@@ -19,27 +19,35 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final TextEditingController _textEditingController;
+  static String redirectURL =
+      Uri.encodeComponent('klavilinkdemoflutter://redirect');
   static List<ListItemType> items = [
     ListItemType(
-      label: "Klavi Link, redirectUrl is a URL Scheme",
+      label: "Sandbox",
       value:
-          "https://open-sandbox.klavi.ai/data/v1/basic-links/ofpfdemo?redirectURL=klavilinkdemoflutter://redirect",
+          "https://open-sandbox.klavi.ai/data/v1/basic-links/ofpfdemo?redirect_url=$redirectURL",
       key: '1',
     ),
     ListItemType(
-        label: "Custom Klavi Link",
-        value: "https://open-testing.klavi.ai/data/v1/basic-links/ofpfdemo?redirectURL=klavilinkdemoflutter://redirect",
+      label: "Testing",
+      value:
+          "https://open-testing.klavi.ai/data/v1/basic-links/ofpfdemo?redirect_url=$redirectURL",
+      key: '2',
+    ),
+    ListItemType(
+        label: "Custom",
+        value:
+            "https://open.klavi.tech/data/v1/basic-links/ofpfdemo?redirect_url=$redirectURL",
         key: "custom"),
   ];
-  var selectValue = items.first.value;
+
   var selectIndex = 0;
-  var textValue = items.first.value;
 
   @override
   void initState() {
     super.initState();
 
-    _textEditingController = TextEditingController(text: textValue);
+    _textEditingController = TextEditingController(text: items.first.value);
   }
 
   @override
@@ -56,7 +64,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               DropdownMenu<String>(
                   expandedInsets: EdgeInsets.zero,
-                  initialSelection: textValue,
+                  initialSelection: _textEditingController.text,
                   dropdownMenuEntries:
                       items.map<DropdownMenuEntry<String>>((item) {
                     return DropdownMenuEntry<String>(
@@ -64,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                   }).toList(),
                   onSelected: (value) {
                     setState(() {
-                      textValue = value!;
+                      _textEditingController.text = value!;
                       selectIndex =
                           items.indexWhere((element) => element.value == value);
                     });
@@ -79,9 +87,18 @@ class _HomePageState extends State<HomePage> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    context.go('/web', extra: textValue);
+                    context.go('/web', extra: Uri.encodeFull(_textEditingController.text));
                   },
-                  child: const Text('GO'))
+                  child: const Text('Open in Webview')),
+              SizedBox.fromSize(
+                size: const Size(0, 10),
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    launchUrl(Uri.parse(Uri.encodeFull(_textEditingController.text)),
+                        mode: LaunchMode.externalApplication);
+                  },
+                  child: const Text('Open in browswer'))
             ],
           ),
         ));
