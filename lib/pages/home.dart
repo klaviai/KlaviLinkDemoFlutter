@@ -25,19 +25,31 @@ class _HomePageState extends State<HomePage> {
     ListItemType(
       label: "Sandbox",
       value:
-          "https://open-sandbox.klavi.ai/data/v1/basic-links/ofpfdemo?redirect_url=$redirectURL",
+          "https://open-sandbox.klavi.ai/data/v1/basic-links/ofpfdemo?redirect_url=klavilinkdemoflutter://redirect",
       key: '1',
     ),
     ListItemType(
       label: "Testing",
       value:
-          "https://open-testing.klavi.ai/data/v1/basic-links/ofpfdemo?redirect_url=$redirectURL",
+          "https://open-testing.klavi.ai/data/v1/basic-links/ofpfdemo?redirect_url=klavilinkdemoflutter://redirect",
       key: '2',
+    ),
+    ListItemType(
+      label: "ofpf-multi-insti（A）",
+      value:
+          "https://open-testing.klavi.ai/data/v1/basic-links/ofpf-multi-insti?personal_tax_id=22697459812&email=jmlee26@gmail.com&redirect_url=klavilinkdemoflutter://redirect",
+      key: '3',
+    ),
+    ListItemType(
+      label: "ofpf-singl-insti（B）",
+      value:
+          "https://open-testing.klavi.ai/data/v1/basic-links/ofpf-singl-insti?personal_tax_id=22697459812&email=jmlee26@gmail.com&redirect_url=klavilinkdemoflutter://redirect",
+      key: '4',
     ),
     ListItemType(
         label: "Custom",
         value:
-            "https://open.klavi.tech/data/v1/basic-links/ofpfdemo?redirect_url=$redirectURL",
+            "https://open.klavi.tech/data/v1/basic-links/ofpfdemo?redirect_url=klavilinkdemoflutter://redirect",
         key: "custom"),
   ];
 
@@ -87,7 +99,7 @@ class _HomePageState extends State<HomePage> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    context.go('/web', extra: Uri.encodeFull(_textEditingController.text));
+                    context.go('/web', extra: _textEditingController.text);
                   },
                   child: const Text('Open in Webview')),
               SizedBox.fromSize(
@@ -95,7 +107,7 @@ class _HomePageState extends State<HomePage> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    launchUrl(Uri.parse(Uri.encodeFull(_textEditingController.text)),
+                    launchUrl(Uri.parse(_textEditingController.text),
                         mode: LaunchMode.externalApplication);
                   },
                   child: const Text('Open in browswer'))

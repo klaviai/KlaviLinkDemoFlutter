@@ -6,15 +6,24 @@ import 'package:klavi_link_demo_flutter/pages/web.dart';
 final router = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', builder: (context, state) => const HomePage(), routes: [
-      GoRoute(
-        path: 'web',
-        builder: (context, state) => const WebPage(),
-      ),
-      GoRoute(
-        path: 'redirect',
-        builder: (context, state) => const RedirectPage(),
-      )
-    ])
+    GoRoute(
+        path: '/',
+        builder: (context, state) {
+          return const HomePage();
+        },
+        routes: [
+          GoRoute(
+            path: 'web',
+            builder: (context, state) {
+              return const WebPage();
+            },
+          ),
+          GoRoute(
+            path: 'redirect',
+            builder: (context, state) {
+              return const RedirectPage();
+            },
+          )
+        ]),
   ],
 );
