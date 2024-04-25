@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:klavi_link_demo_flutter/utils/launch_app.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
@@ -13,6 +13,13 @@ class WebPage extends StatefulWidget {
 
 class _WebPageState extends State<WebPage> {
   late final WebViewController _webViewController;
+
+  static const whiteList = [
+    "open.klavi.tech",
+    "open-sandbox.klavi.ai",
+    "open-testing.klavi.ai",
+    "open.klavi.ai",
+  ];
 
   @override
   void initState() {
@@ -36,12 +43,17 @@ class _WebPageState extends State<WebPage> {
         if (request.url == 'about:blank') {
           return NavigationDecision.prevent;
         }
-        if (!request.url.startsWith('http') &&
-            !request.url.startsWith('https')) {
-          LaunchApp.open(request.url);
+        try {
+          Uri requestUri = Uri.parse(request.url);
+          if (whiteList.contains(requestUri.host)) {
+            return NavigationDecision.navigate;
+          }
+          await launchUrl(requestUri, mode: LaunchMode.externalApplication);
+          return NavigationDecision.prevent;
+        } catch (e) {
+          debugPrint('e: $e');
           return NavigationDecision.prevent;
         }
-        return NavigationDecision.navigate;
       }));
   }
 

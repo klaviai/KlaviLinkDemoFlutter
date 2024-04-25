@@ -19,8 +19,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final TextEditingController _textEditingController;
-  static String redirectURL =
-      Uri.encodeComponent('klavilinkdemoflutter://redirect');
   static List<ListItemType> items = [
     ListItemType(
       label: "Sandbox",
@@ -92,7 +90,8 @@ class _HomePageState extends State<HomePage> {
               TextField(
                 enabled: items[selectIndex].key == 'custom',
                 controller: _textEditingController,
-                maxLines: 3,
+                minLines: 1,
+                maxLines: 5,
               ),
               SizedBox.fromSize(
                 size: const Size(0, 10),
@@ -110,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                     launchUrl(Uri.parse(_textEditingController.text),
                         mode: LaunchMode.externalApplication);
                   },
-                  child: const Text('Open in browswer'))
+                  child: const Text('Open in browser'))
             ],
           ),
         ));

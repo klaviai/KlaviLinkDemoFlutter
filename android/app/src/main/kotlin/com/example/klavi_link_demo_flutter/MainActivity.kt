@@ -15,22 +15,21 @@ class MainActivity: FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             if (call.method == "launchApp") {
-                val uri = Uri.parse(call.arguments())
                 try {
+                    val uri = Uri.parse(call.arguments())
                     val intent = if (uri.scheme == "intent") {
                         Intent.parseUri(uri.toString(), Intent.URI_INTENT_SCHEME)
                     } else {
                         Intent(Intent.ACTION_VIEW, uri)
                     }
                     startActivity(intent)
-                } catch (e: ActivityNotFoundException) {
+                    result.success(true)
+                } catch (e: Error) {
                     e.printStackTrace()
-                } catch (e: URISyntaxException) {
-                    e.printStackTrace()
+                    result.success(false)
                 }
-                result.success("launchApp success")
             } else {
-                result.notImplemented()
+                result.success(false)
             }
         }
     }
