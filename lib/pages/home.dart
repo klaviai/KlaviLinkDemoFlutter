@@ -19,35 +19,37 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late final TextEditingController _textEditingController;
+  static String redirectURL =
+      Uri.encodeComponent('klavilinkdemoflutter://redirect');
   static List<ListItemType> items = [
     ListItemType(
       label: "Sandbox",
       value:
-          "https://open-sandbox.klavi.ai/data/v1/basic-links/ofpfdemo?redirect_url=klavilinkdemoflutter://redirect",
+          "https://open-sandbox.klavi.ai/data/v1/basic-links/ofpfdemo?redirect_url=$redirectURL",
       key: '1',
     ),
     ListItemType(
       label: "Testing",
       value:
-          "https://open-testing.klavi.ai/data/v1/basic-links/ofpfdemo?redirect_url=klavilinkdemoflutter://redirect",
+          "https://open-testing.klavi.ai/data/v1/basic-links/ofpfdemo?redirect_url=$redirectURL",
       key: '2',
     ),
     ListItemType(
       label: "ofpf-multi-insti（A）",
       value:
-          "https://open-testing.klavi.ai/data/v1/basic-links/ofpf-multi-insti?personal_tax_id=22697459812&email=jmlee26@gmail.com&redirect_url=klavilinkdemoflutter://redirect",
+          "https://open-testing.klavi.ai/data/v1/basic-links/ofpf-multi-insti?redirect_url=$redirectURL",
       key: '3',
     ),
     ListItemType(
       label: "ofpf-singl-insti（B）",
       value:
-          "https://open-testing.klavi.ai/data/v1/basic-links/ofpf-singl-insti?personal_tax_id=22697459812&email=jmlee26@gmail.com&redirect_url=klavilinkdemoflutter://redirect",
+          "https://open-testing.klavi.ai/data/v1/basic-links/ofpf-singl-insti?redirect_url=$redirectURL",
       key: '4',
     ),
     ListItemType(
         label: "Custom",
         value:
-            "https://open.klavi.tech/data/v1/basic-links/ofpfdemo?redirect_url=klavilinkdemoflutter://redirect",
+            "https://open.klavi.tech/data/v1/basic-links/ofpfdemo?redirect_url=$redirectURL",
         key: "custom"),
   ];
 
